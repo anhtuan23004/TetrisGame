@@ -1,27 +1,27 @@
-#ifndef GAMEBACKGROUND_H
+﻿#ifndef GAMEBACKGROUND_H
 #define GAMEBACKGROUND_H
 
 #include "Game.h"
 
 
-class GameBackground // class that handles stuff related to game background
+class GameBackground 
 {
 public:
     GameBackground();
     virtual ~GameBackground();
 
-    bool loadBackground(std::string);  //load background
-    void drawBackground(); // draw background
-    void scrollBackground();  // scroll background
+    bool loadBackground(std::string);  
+    void drawBackground(); 
+    void scrollBackground();  // Cuộn bk
 
-    static const int scrollSpeed = 1;  // constant scrolling speed
+    static const int scrollSpeed = 1;
 
 
 protected:
 
 private:
-    SDL_Texture* backgroundTexture;  // background image texture
-    SDL_Rect backgroundClip;  //  background image clip to be rendered on screen
+    SDL_Texture* backgroundTexture; 
+    SDL_Rect backgroundClip; 
 };
 
 #endif // GAMEBACKGROUND_H

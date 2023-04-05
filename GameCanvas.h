@@ -29,7 +29,7 @@ public:
 protected:
 
 private:
-    int canvasMatrix[30][24];       // our canvas matrix
+    int canvasMatrix[30][24];      
 };
 
 #endif // GAMECANVAS_H

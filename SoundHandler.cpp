@@ -1,14 +1,8 @@
 #include "soundHandler.h"
 
-soundHandler::soundHandler()
-{
-    //ctor
-}
+soundHandler::soundHandler(){}
 
-soundHandler::~soundHandler()
-{
-    //dtor
-}
+soundHandler::~soundHandler(){}
 
 Mix_Music* soundHandler::bgm = nullptr;
 Mix_Chunk* soundHandler::destruction = nullptr;

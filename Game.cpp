@@ -1,114 +1,110 @@
-
+﻿
 #include "GameCanvas.h"
 #include "Block.h"
 #include "soundHandler.h"
 #include <SDL_image.h>
 
-// two blocks we use in program
-Block currentBlock; // stores the current moving block
-Block nextBlock;    // stores the next upcoming block
+// 2 khối được sử dụng 
+Block currentBlock; // Lưu trữ khối đang di chuyển
+Block nextBlock;    // Lưu trữ khối sắp xuất hiện
 
-GameCanvas canvas;  // basically a 2-D matrix, stores our game
+GameCanvas canvas; 
 
 Game::Game()
 {
-    //ctor init default values
+    //constructor giá trị mặc định
     gameSurface = nullptr;   gameWindow = nullptr;
 
     gameState = PLAY;
 
     score = 0;
-
-    // seed value to gen random numbers
-    srand(time(NULL));
 }
 
 Game::~Game()
 {
-    //dtor init to nullptr after freeing memory
+    //destructor init to nullptr sau khi đóng bộ nhớ 
     gameSurface = nullptr;    gameRenderer = nullptr;
     gameWindow = nullptr;   font = nullptr;
 }
 
-// static members, declared inside class, defined outside class
+// Hàm thành viên tĩnh , được khai báo bên trong lớp nhưng được định nghĩa bên ngoài lớp
 SDL_Renderer* Game::gameRenderer = nullptr;
 TTF_Font* Game::font = nullptr;
 
 void Game::fatalError(string error, bool closeProgram)
 {
-    cout << "Error Occured : " << error << endl; // if closeProgram is true, cleansystem and exit
+    cout << "Error Occured : " << error << endl; // Nếu đóng chương trình , dọn hệ thống và thoát
     if (closeProgram)
     {
-        Game g; // since it is a static member function, we need object to call non-static member functions
+        Game g; //Bởi vì nó là hàm tĩnh , Cần đối tượng để gọi hàm thành viên không tĩnh
         g.cleanSystem();
         cin.get();
         exit(-1);
     }
 }
 
-// load given text with given color
+// Nạp văn bản 
 SDL_Texture* Game::loadText(string text, SDL_Color color)
 {
-    SDL_Surface* textSurface = TTF_RenderText_Solid(Game::font, text.c_str(), color); // load text on surface
-    SDL_Texture* ret = SDL_CreateTextureFromSurface(gameRenderer, textSurface);    // convert surface to texture
-    SDL_FreeSurface(textSurface);   textSurface = nullptr;    // free the surface, now none of use
-    return ret;     // return the text as texture
+    SDL_Surface* textSurface = TTF_RenderText_Solid(Game::font, text.c_str(), color); // Đưa chữ ra bề mặt
+    SDL_Texture* ret = SDL_CreateTextureFromSurface(gameRenderer, textSurface);    // Chuyển đổi bề mặt thành kết cấu
+    SDL_FreeSurface(textSurface);   textSurface = nullptr;    // Bề mặt trống
+    return ret;     // Trả về dạng kết cấu chữ
 }
 
 
 void Game::run()
 {
-    if (!initSystem())   // init system and libraries
+    if (!initSystem())   // Hệ thống và thư viện ban đầu
     {
         cout << "Error in INITIALIZING System " << endl; cin.get(); return;
     }
-    if (!loadFiles())    // load files and allocate memory
+    if (!loadFiles())    // Chạy file và cấp phát bộ nhớ 
     {
         cout << "Error in Loading Files " << endl;  cin.get();  return;
     }
 
-    // show title screen
+    // Đưa ảnh ra màn hình
     imageHandler::showImage(imageHandler::titleScreenTexture, nullptr, nullptr);
     renderChanges();
     SDL_Delay(1000);
 
-    // show game instructions
-    imageHandler::showImage(imageHandler::howToPlayTexture, nullptr, nullptr);
+    imageHandler::showImage(imageHandler::newGameTexture, nullptr, nullptr);
     renderChanges();
 
-    gameState = PLAY;     // let the game begins
+    gameState = PLAY;     // Bắt đầu game
 
-    waitForKBHit(); // wait while any key is pressed
+    waitForKBHit(); // Đợi nhấn nút 
 
     while (gameState == PLAY)
     {
-        gameLoop(); // as we don't have menu, it's quite simple as it is
+        gameLoop(); 
     }
 
 
-    cleanSystem();  // clean the system, and end program
+    cleanSystem();  // Dọn hệ thống và thoát
 }
 
-// init SDL and its extensions
+
 bool Game::initSystem()
 {
-    SDL_Init(SDL_INIT_EVERYTHING); // init common SDL stuff
-    IMG_Init(IMG_INIT_PNG);     // init SDL_Image
-    TTF_Init();     // init SDL True Type Font
-    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);     // init SDL_Mixer to manage audio
+    SDL_Init(SDL_INIT_EVERYTHING); 
+    IMG_Init(IMG_INIT_PNG);     
+    TTF_Init();
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 
-    // create window, attach surface and renderer to it, and set default  render draw color
+    // Tạo của sổ , đính lên màn hình ,  tạo màu vẽ cơ bản
     gameWindow = SDL_CreateWindow("Tetris Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     gameSurface = SDL_GetWindowSurface(gameWindow);
     gameRenderer = SDL_CreateRenderer(gameWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     SDL_SetRenderDrawColor(gameRenderer, 255, 255, 255, 255);
 
-    return true;    // as I have all libraries set up, I simply return true
+    return true;  
 }
 
 void Game::cleanSystem()
 {
-    // deallocate all heap memory allocated for game objects
+    // Giải phóng bộ nhớ
     SDL_FreeSurface(gameSurface);
     SDL_DestroyRenderer(gameRenderer);
     TTF_CloseFont(font);
@@ -116,179 +112,148 @@ void Game::cleanSystem()
     imageHandler::freeAllMemory();
     soundHandler::freeAllSounds();
 
-    // turn SDL and its extensions off
+    // Đóng SDl
     Mix_Quit();  TTF_Quit();  IMG_Quit();  SDL_Quit();
 }
 
-// load all files and allocate memory accordingly
+// Chạy file , cấp phát bộ nhớ
 bool Game::loadFiles()
 {
     font = TTF_OpenFont("assets/fonts/neuropol.ttf", 28);
-    // if files are misplaced, and could not be found, terminate by prompting the same on console
     if (!font || !imageHandler::loadAllImages() || !soundHandler::loadAllSounds())
         return false;
     return true;
 }
 
-// handle all game events
+// Điều khiển game
 void Game::handleGameEvents()
 {
-    while (SDL_PollEvent(&gameEvents)) // while there are events in queue
+    while (SDL_PollEvent(&gameEvents))
     {
-        switch (gameEvents.type) // handle event according to its type
+        switch (gameEvents.type) 
         {
-        case SDL_QUIT: // if X button of window pressed
-            gameState = EXIT; // game state is EXIT
+        case SDL_QUIT: // Nếu ấn nút X
+            gameState = EXIT; // game EXIT
             break;
-        case SDL_KEYDOWN:   // handle keyboard events
-            if (gameEvents.key.keysym.sym == SDLK_SPACE) // space bar for rotating the block
+        case SDL_KEYDOWN:   // điều khiên bản phím
+            if (gameEvents.key.keysym.sym == SDLK_SPACE) // Dấu cách để xoay khối
             {
-                // clear the position of block form canvas
+                // Xóa vị trí của khối
                 canvas.clearBlockFromCanvas(currentBlock.blockPattern, currentBlock.getRowNo(), currentBlock.getColNo());
-                // then rotate block
+                // Xoay khối
                 currentBlock.rotateBlock();
             }
-            else if (gameEvents.key.keysym.sym == SDLK_DOWN) // down for down motion
+            else if (gameEvents.key.keysym.sym == SDLK_DOWN) // Khối rơi xuống
             {
-                // if u want block to fall down in steps
-
-                // clear block from canvas
+ 
+                // Xóa khối
                 canvas.clearBlockFromCanvas(currentBlock.blockPattern, currentBlock.getRowNo(), currentBlock.getColNo());
-                // if there is no collision happening
+                // Nếu không có gì xày ra
                 if (!canvas.checkForStopCondition(currentBlock.blockPattern, currentBlock.getRowNo(), currentBlock.getColNo()))
                 {
-                    soundHandler::playMovementEffect(); // play the block movement sound effect
-                    int newRow = currentBlock.getRowNo(); // getter gives private info
-                    newRow++;                           // increase the row number of block
-                    currentBlock.setRowNo(newRow);  // setter set incremented row no
+                    soundHandler::playMovementEffect(); // Âm thanh khi di chuyển
+                    int newRow = currentBlock.getRowNo();
+                    newRow++;                           // Tăng số hàng của khối
+                    currentBlock.setRowNo(newRow);  // setter số hàng tăng dần
                 }
 
-                // if u want block to direct fall down
-
-                // do increment row no till collision happens
-                /*
-                while(!canvas.checkForStopCondition(currentBlock.blockPattern,currentBlock.getRowNo(),currentBlock.getColNo()))
-                {
-                    // clear block position form canvas
-                    canvas.clearBlockFromCanvas(currentBlock.blockPattern,currentBlock.getRowNo(),currentBlock.getColNo());
-                    // increment row no
-                    int newRow=currentBlock.getRowNo();
-                    newRow++;
-                    currentBlock.setRowNo(newRow);
-                }*/
             }
-            else if (gameEvents.key.keysym.sym == SDLK_LEFT)  // a to move block left
+            else if (gameEvents.key.keysym.sym == SDLK_LEFT)  // Di chuyển khối sang trái
             {
-                // clear block from canvas
+
                 canvas.clearBlockFromCanvas(currentBlock.blockPattern, currentBlock.getRowNo(), currentBlock.getColNo());
-                // only move block to left if there is chance of moving
                 if (canvas.isLeftMovePossible(currentBlock.blockPattern, currentBlock.getRowNo(), currentBlock.getColNo()))
-                    currentBlock.moveBlockHoriz(0); // 0 passed as argument to indicate left movement
+                    currentBlock.moveBlockHoriz(0);
             }
             else if (gameEvents.key.keysym.sym == SDLK_RIGHT)
             {
-                // clear block from canvas
                 canvas.clearBlockFromCanvas(currentBlock.blockPattern, currentBlock.getRowNo(), currentBlock.getColNo());
-                // only move block to right if there is chance of moving
                 if (canvas.isRightMovePossible(currentBlock.blockPattern, currentBlock.getRowNo(), currentBlock.getColNo()))
-                    currentBlock.moveBlockHoriz(1); // 1 indicates right movement of block
-            }
+                    currentBlock.moveBlockHoriz(1); 
             break;
         }
     }
 }
 void Game::updateScreen()
 {
-    // clear the screen by making the background white
+    // Xóa màn hình , background màu trắng
     SDL_SetRenderDrawColor(gameRenderer, 255, 255, 255, 255);
     SDL_RenderClear(gameRenderer);
 
-    // render the background image
+    // Xuất ảnh background
     imageHandler::showImage(imageHandler::bkTexture, nullptr, nullptr);
 
-    // clear both, current and next block from canvas
+    // Xóa cả khối hiện tại và tiếp theo
     canvas.clearBlockFromCanvas(currentBlock.blockPattern, currentBlock.getRowNo(), currentBlock.getColNo());
     canvas.clearBlockFromCanvas(nextBlock.blockPattern, nextBlock.getRowNo(), nextBlock.getColNo());
 
-    // move our current block down as its default motion
+    // DI chuyển khối đi xuống
     currentBlock.moveBlockDown();
 
-    // copy our block pattern on canvas
     canvas.copyBlockToCanvas(currentBlock.blockPattern, currentBlock.getRowNo(), currentBlock.getColNo());
-    // check for collision
+
     if (canvas.checkForStopCondition(currentBlock.blockPattern, currentBlock.getRowNo(), currentBlock.getColNo()))
     {
-        score += 5;   // give +5 score if the block is placed
-        if (canvas.unifyColor()) // check for the game over condition
+        score += 5;   // Nếu khối được đặt xuống
+        if (canvas.unifyColor()) // Kiểm tra điều kiện game over
         {
-            canvas.showMatrix();    // show current canvas status
+            canvas.showMatrix();    // Ma trận hiện tại
             SDL_Delay(1000);
-            gameState = EXIT;     // make the game ends here
-            return;     // no need to do any other stuff of updating, return function from here
+            gameState = EXIT;     // Game dừng
+            return;
         }
-        while (canvas.destroyRows())    // check if there is availability of destroying rows
+        while (canvas.destroyRows())    // Kiểm tra nếu hàng ngang đầy và phá nó
         {
-            soundHandler::playDestructionEffect();  // play sound effect for row destruction
-            score += 20;      // +20 score if a row destroys
+            soundHandler::playDestructionEffect();  // Âm thanh hàng biến mất
+            score += 20; 
         }
-        currentBlock = nextBlock; // make the next block as current block
-        currentBlock.setRowNo(0);  currentBlock.setColNo(4);    // reset position of current block
-        nextBlock.createNewBlock(23, 18);    // create a new next block
+        currentBlock = nextBlock;
+        currentBlock.setRowNo(0);  currentBlock.setColNo(4);    // Thay đổi vị trí của khối hiện tại 
+        nextBlock.createNewBlock(23, 18); 
     }
 
-    // copy our next block pattern to canvas
     canvas.copyBlockToCanvas(nextBlock.blockPattern, nextBlock.getRowNo(), nextBlock.getColNo());
-
-    // show our canvas
     canvas.showMatrix();
-
-    // display score on screen
     renderScore();
 
 }
 
 void Game::renderChanges()
 {
-    SDL_RenderPresent(gameRenderer);    // apply all changes on screen
+    SDL_RenderPresent(gameRenderer);    // Dán tất cả thay đổi trên màn hình
 }
 
 // main game loop
 void Game::gameLoop()
 {
-    soundHandler::playBGM();    // start BGM
-    score = 0;        // init score to 0
-    // create two blocks of game
+    soundHandler::playBGM();   
+    score = 0;      
     currentBlock.createNewBlock(0, 4);
     nextBlock.createNewBlock(23, 18);
     while (gameState == PLAY)
     {
-        Uint32 startTime = SDL_GetTicks();    // stuff to maintain const framerate
+        Uint32 startTime = SDL_GetTicks();  
 
-        handleGameEvents(); // handle all game events
-        updateScreen();     // make changes accordingly on screen
-        renderChanges();    // render all changes on screen
-
-        // stuff for maintaining constant framerate
-        Uint32 frameTime = SDL_GetTicks() - startTime;
-        if (frameTime < 1000 / FPS)
-            SDL_Delay(1000 / FPS - frameTime);
+        handleGameEvents(); 
+        updateScreen();     
+        renderChanges();    
     }
-    soundHandler::stopBGM();    // stop BGM
-    gameOver(); // handle the game over scene
+    soundHandler::stopBGM();
+    gameOver(); 
 }
 
-// handles score board on game screen
+// Bảng điểm
 void Game::renderScore()
 {
-    stringstream scoreStr;  // stringsteam used for score
+    stringstream scoreStr;  
     scoreStr << " " << score << " ";
     SDL_Color textColor = { 0,0,0,255 };
     if (imageHandler::text)
     {
-        // deallocate memory for previous text, if exist
+        // Giải phóng bộ nhớ
         SDL_DestroyTexture(imageHandler::text);   imageHandler::text = nullptr;
     }
-    // render score on screen
+    //  Xuất ảnh ra ngoài màn hình
     imageHandler::text = loadText(scoreStr.str().c_str(), textColor);
     SDL_Rect scoreBoard = { 340,110,440 - 340,150 - 110 };
     imageHandler::showImage(imageHandler::text, nullptr, &scoreBoard);
@@ -297,20 +262,20 @@ void Game::renderScore()
 
 void Game::gameOver()
 {
-    soundHandler::playGameOverEffect(); // play game over sound effect
-    imageHandler::showImage(imageHandler::transparentTexture, nullptr, nullptr);  // make background transparent
+    soundHandler::playGameOverEffect(); // Âm thanh game over
+    imageHandler::showImage(imageHandler::transparentTexture, nullptr, nullptr);  // Làm bk trong suốt
 
-    // show game over image
+    // Tải ảnh game over
     SDL_Rect gameOverRect = { 40,120,440 - 40,380 - 120 };
     imageHandler::showImage(imageHandler::gameOverTexture, nullptr, &gameOverRect);
 
-    // render final score on screen
+    // Xuất tổng điểm 
     stringstream scoreStr;
     scoreStr << " SCORE : " << score << " ";
     SDL_Color textColor = { 255, 255, 0,255 };
     if (imageHandler::text)
     {
-        // deallocate memory for previous text, if exist
+        // Giải phóng bộ nhớ
         SDL_DestroyTexture(imageHandler::text);   imageHandler::text = nullptr;
     }
     imageHandler::text = loadText(scoreStr.str().c_str(), textColor);
@@ -319,7 +284,7 @@ void Game::gameOver()
 
     renderChanges();
 
-    // wait until user close the program using X button on window
+    // Đợi đến khi người dùng đóng chương trình
     SDL_Event ev;
     bool finalEnd = false;
     while (!finalEnd)
@@ -335,7 +300,7 @@ void Game::gameOver()
 void Game::waitForKBHit()
 {
     bool cont = false;
-    // wait while there is a key pressed, or the program is closed
+    // Đợi phím hoặc đóng chương trình
     while (!cont)
     {
         while (SDL_PollEvent(&gameEvents))

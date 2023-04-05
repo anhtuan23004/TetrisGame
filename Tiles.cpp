@@ -10,12 +10,6 @@ SDL_Rect Tiles::tilesSrcRects[TOTAL_TILES] = {
                                         {265,445,TILE_DIM,TILE_DIM}
 };
 
-Tiles::Tiles()
-{
-    //ctor
-}
+Tiles::Tiles(){}
 
-Tiles::~Tiles()
-{
-    //dtor
-}
+Tiles::~Tiles(){}

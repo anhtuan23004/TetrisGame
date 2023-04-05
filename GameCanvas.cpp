@@ -2,16 +2,12 @@
 
 GameCanvas::GameCanvas()
 {
-    //ctor set default matrix
     for (int i = 0; i < CANVAS_ROWS; i++)
         for (int j = 0; j < CANVAS_COLS; j++)
             canvasMatrix[i][j] = 0;
 }
 
-GameCanvas::~GameCanvas()
-{
-    //dtor
-}
+GameCanvas::~GameCanvas(){}
 
 void GameCanvas::showMatrix()
 {
@@ -19,9 +15,8 @@ void GameCanvas::showMatrix()
     {
         for (int j = 0; j < CANVAS_COLS; j++)
         {
-            if (canvasMatrix[i][j] != 0) // if there is a tile present
+            if (canvasMatrix[i][j] != 0)
             {
-                // show that tile on screen in canvas
                 SDL_Rect dest = { j * TILE_DIM,i * TILE_DIM,TILE_DIM,TILE_DIM };
                 if (imageHandler::tilesTexture == nullptr)
                     cout << "HELLO";
