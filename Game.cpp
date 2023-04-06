@@ -119,7 +119,7 @@ void Game::cleanSystem()
 // Chạy file , cấp phát bộ nhớ
 bool Game::loadFiles()
 {
-    font = TTF_OpenFont("assets/fonts/neuropol.ttf", 28);
+    font = TTF_OpenFont("assets/fonts/neuropol.ttf", 24);
     if (!font || !imageHandler::loadAllImages() || !soundHandler::loadAllSounds())
         return false;
     return true;

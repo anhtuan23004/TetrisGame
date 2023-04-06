@@ -1,5 +1,4 @@
-﻿  Block.cpp
-  Game.cpp
+﻿  Game.cpp
 C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(177,12): error C2601: 'Game::updateScreen': local function definitions are illegal
 C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(130): message : this line contains a '{' which has not yet been matched
 C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(221,12): error C2601: 'Game::renderChanges': local function definitions are illegal
@@ -13,7 +12,3 @@ C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(130): message : this line contai
 C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(300,12): error C2601: 'Game::waitForKBHit': local function definitions are illegal
 C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(130): message : this line contains a '{' which has not yet been matched
 C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(130): fatal  error C1075: '{': no matching token found
-  GameCanvas.cpp
-  ImageHandler.cpp
-  SoundHandler.cpp
-  Generating Code...

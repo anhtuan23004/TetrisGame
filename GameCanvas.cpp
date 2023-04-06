@@ -1,4 +1,4 @@
-#include "GameCanvas.h"
+﻿#include "GameCanvas.h"
 
 GameCanvas::GameCanvas()
 {
@@ -31,10 +31,10 @@ void GameCanvas::copyBlockToCanvas(int block[4][4], int r, int c)
     {
         for (int j = 0; j < 4; j++)
         {
-            if (block[i][j] != 0)  // only copy the pattern, and not 0's from pattern
+            if (block[i][j] != 0)  // Chỉ sao chép mẫu và không có số 0 trong mẫu
             {
 
-                canvasMatrix[r + i][c + j] = block[i][j]; // canvas matrix has indices relative to block position
+                canvasMatrix[r + i][c + j] = block[i][j]; // Ma trận chứ vị trí của khối
             }
         }
     }
@@ -45,7 +45,7 @@ void GameCanvas::clearBlockFromCanvas(int block[4][4], int r, int c)
     {
         for (int j = 0; j < 4; j++)
         {
-            if (block[i][j] != 0)  // only cleat the tile elements
+            if (block[i][j] != 0) 
                 canvasMatrix[r + i][c + j] = 0;
         }
     }
@@ -58,9 +58,9 @@ bool GameCanvas::checkForStopCondition(int block[4][4], int r, int c)
     {
         for (int j = 0; j < 4; j++)
         {
-            if (block[i][j] != 0)  // if its a valid tile of block
+            if (block[i][j] != 0)
             {
-                // if it has reached bottom or black tile is beneath it
+                // Nếu nó xuống cuối cùng hoặc ô đen ở dưới
                 if (r + i >= 29 || (canvasMatrix[r + i + 1][j + c] == 1))
                     collided = true;
             }
@@ -78,7 +78,7 @@ bool GameCanvas::unifyColor()
             if (canvasMatrix[i][j] != 0)
             {
                 canvasMatrix[i][j] = 1;
-                if (i == 0)        // check if tetris is full
+                if (i == 0)        // Kiểm tra đầy hay chưa
                     isTouhedUp = true;
             }
         }
@@ -94,17 +94,17 @@ bool GameCanvas::destroyRows()
         for (int j = 0; j < TET_COLS; j++)
         {
             if (canvasMatrix[i][j] == 1)
-                filledTiles++;  // count no. of BLACK tiles in a row
+                filledTiles++;  // Đếm số ô đen 1 hàng
         }
-        if (filledTiles == TET_COLS)   // if BLACK tiles are equal to tetris total columns
+        if (filledTiles == TET_COLS)  
         {
-            // move all rows down
+            // Di chuyển tất cả hàng ngang
             for (int a = i; a >= 1; a--)
             {
                 for (int b = 0; b < TET_COLS; b++)
                     canvasMatrix[a][b] = canvasMatrix[a - 1][b];
             }
-            // make the uppermost row full of 0
+            // Biến hàng trên cùng thành số 0
             for (int c = 0; c < TET_COLS; c++)
                 canvasMatrix[0][c] = 0;
 
@@ -120,7 +120,7 @@ bool GameCanvas::isLeftMovePossible(int block[4][4], int r, int c)
     {
         for (int j = 0; j < 4; j++)
         {
-            if (block[i][j] != 0)  // if the block tile, touches the boundry or touches a black tile, restrict movement
+            if (block[i][j] != 0)  // Nếu chạm viền hoặc ô màu đen dừng lại
             {
                 if (canvasMatrix[r + i][c + j - 1] == 1 || c + j == 0)
                     return false;
@@ -135,9 +135,9 @@ bool GameCanvas::isRightMovePossible(int block[4][4], int r, int c)
     {
         for (int j = 0; j < 4; j++)
         {
-            if (block[i][j] != 0)  // if a valid tile
+            if (block[i][j] != 0)  
             {
-                if (canvasMatrix[r + i][c + j + 1] == 1 || c + j == TET_COLS - 1)  // goes out of boundry or collide with black tile, restrict movement
+                if (canvasMatrix[r + i][c + j + 1] == 1 || c + j == TET_COLS - 1)  // Nếu chạm vào viền hoặc ô màu đen
                     return false;
             }
         }
