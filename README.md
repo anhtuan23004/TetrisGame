@@ -1,1 +1,1 @@
-# Teris
+# Tetris
