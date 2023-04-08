@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <time.h>
 #include <stdlib.h>
 #include <SDL_video.h>
 #include <SDL_events.h>
