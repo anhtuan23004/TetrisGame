@@ -33,7 +33,7 @@ public:
     static TTF_Font* font;  
     static SDL_Texture* loadText(string, SDL_Color);   // Chữ màu   
     static void fatalError(string, bool);    
-
+    static const int FPS=60;
 
 
 protected:
