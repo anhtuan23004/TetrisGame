@@ -18,7 +18,6 @@ Game::Game()
     gameState = PLAY;
 
     score = 0;
-    srand(time(NULL));
 }
 
 Game::~Game()
@@ -233,14 +232,9 @@ void Game::gameLoop()
     nextBlock.createNewBlock(23, 18);
     while (gameState == PLAY)
     {
-        Uint32 startTime = SDL_GetTicks();  
-
         handleGameEvents(); 
         updateScreen();     
         renderChanges();
-        Uint32 frameTime=SDL_GetTicks()-startTime;
-        if(frameTime<1000/FPS)
-            SDL_Delay(1000/FPS-frameTime);
     }
     soundHandler::stopBGM();
     gameOver(); 
