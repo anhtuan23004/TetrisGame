@@ -1,7 +1,7 @@
 ☆.。.:*・☆.。.:*・☆.。.:*・TETRIS☆.。.:*・☆.。.:*・☆.。.:*・☆
 
 ✎ Cách cài đặt :
-- Dùng Microsoft Visual Studio hoặc Code::Block
+- Dùng Microsoft Visual Studio 
 - Thư viện SDL ( SDL,SDL_image,SDL_ttf,SDL_mixer ) 
 Tải xuống tại : https://github.com/libsdl-org/SDL
 
