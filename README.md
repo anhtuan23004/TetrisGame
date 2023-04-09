@@ -24,6 +24,6 @@ hoặc trên link youtube đới với cài SDL2 trên VSC và sử dựng Makef
 - Menu bắt đầu cho trò chơi
 ## Code tham khảo chủ yếu ở lazyfoo : https://lazyfoo.net/tutorials/SDL/index.php
 
-## Cảm ơn mọi người đã ghé qua, đây là tựa game khá đơn giản và cũng là lần đầu mình làm một trò chơi như này, nếu các bạn có góp ý thì có thể mình qua mail : tuanmaianh2004@gmail.com
+## Đây là tựa game phổ biến ,nếu các bạn có góp ý thì có thể mình qua mail : tuanmaianh2004@gmail.com
 
 # Thank you, so much!!!!
