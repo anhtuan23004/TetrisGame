@@ -21,7 +21,6 @@ hoặc trên link youtube đới với cài SDL2 trên VSC và sử dựng Makef
 ## Các tính năng của game :
 - Có các hiệu ứng âm thanh khi di chuyển, music cho trò chơi
 - Điểm cao (đang update thêm)
-- Menu bắt đầu cho trò chơi
 ## Code tham khảo chủ yếu ở lazyfoo : https://lazyfoo.net/tutorials/SDL/index.php
 
 ## Đây là tựa game phổ biến ,nếu các bạn có góp ý thì có thể mình qua mail : tuanmaianh2004@gmail.com
