@@ -1,11 +1,18 @@
 ﻿#include "imageHandler.h"
 #include <SDL_image.h>
 
-imageHandler::imageHandler(){}
+imageHandler::imageHandler()
+{
+    //ctor
+}
 
-imageHandler::~imageHandler(){}
+imageHandler::~imageHandler()
+{
+    //dtor
+}
 
 
+// static members, declared inside class, defined outside the class
 SDL_Texture* imageHandler::tilesTexture = nullptr;
 SDL_Texture* imageHandler::bkTexture = nullptr;
 SDL_Texture* imageHandler::text = nullptr;
@@ -14,27 +21,27 @@ SDL_Texture* imageHandler::gameOverTexture = nullptr;
 SDL_Texture* imageHandler::newGameTexture = nullptr;
 SDL_Texture* imageHandler::titleScreenTexture = nullptr;
 
-// Tải ảnh có kết cấu
+// loads image as texture
 SDL_Texture* imageHandler::loadTexture(string path, int r, int g, int b)
 {
-    SDL_Surface* tempImgSurface = IMG_Load(path.c_str()); // tạo ảnh trên màn hình
-    SDL_Texture* retTexture = nullptr;    // Trả lại kết cấu
-    if (tempImgSurface == nullptr) // Nếu ảnh không chạy được
+    SDL_Surface* tempImgSurface = IMG_Load(path.c_str()); // create image on surface
+    SDL_Texture* retTexture = nullptr;    // texture to be returned
+    if (tempImgSurface == nullptr) // if image does not loaded
     {
         Game::fatalError("Images at " + path + " not found", true);
     }
     else
     {
-        SDL_SetColorKey(tempImgSurface, SDL_TRUE, SDL_MapRGB(tempImgSurface->format, r, g, b));  
-        retTexture = SDL_CreateTextureFromSurface(Game::gameRenderer, tempImgSurface); 
-        SDL_FreeSurface(tempImgSurface);   tempImgSurface = nullptr;  // Giải phóng thứ kh cần thiết trên màn hình
+        SDL_SetColorKey(tempImgSurface, SDL_TRUE, SDL_MapRGB(tempImgSurface->format, r, g, b));  // set provided colorkey to surface
+        retTexture = SDL_CreateTextureFromSurface(Game::gameRenderer, tempImgSurface); // convert surface to texture
+        SDL_FreeSurface(tempImgSurface);   tempImgSurface = nullptr;  // deallocate the non-needed surface
     }
-    return retTexture;  // Cả ảnh và kết cấu
+    return retTexture;  // return image consisting texture
 }
 
 bool imageHandler::loadAllImages()
 {
-    // Tải file ảnh
+    // load all image files
     tilesTexture = loadTexture("assets/images/Tiles.png", 255, 255, 255);
     bkTexture = loadTexture("assets/images/gameBackground.png", 255, 255, 255);
     transparentTexture = loadTexture("assets/images/transparent.png", 255, 255, 255);
@@ -42,11 +49,11 @@ bool imageHandler::loadAllImages()
     newGameTexture = loadTexture("assets/images/newGame.png", 0, 0, 255);
     titleScreenTexture = loadTexture("assets/images/title.png", 0, 0, 255);
 
-    // Làm trong suốt
+    // make the transparent texture
     SDL_SetTextureBlendMode(transparentTexture, SDL_BLENDMODE_BLEND);
     SDL_SetTextureAlphaMod(transparentTexture, 130);
 
-    // Kiểm tra xem chạy được hay không
+    // check if images loaded or not
     if (!tilesTexture || !bkTexture || !transparentTexture || !gameOverTexture || !newGameTexture || !titleScreenTexture)
         return false;
     return true;
@@ -54,12 +61,12 @@ bool imageHandler::loadAllImages()
 
 void imageHandler::showImage(SDL_Texture* resourceTexture, SDL_Rect* src, SDL_Rect* dst)
 {
-    SDL_RenderCopy(Game::gameRenderer, resourceTexture, src, dst); // Sao chép ảnh ở vị trí đặc biệt
+    SDL_RenderCopy(Game::gameRenderer, resourceTexture, src, dst); // copy image on screen at specified position
 }
 
 void imageHandler::freeAllMemory()
 {
-    // Giải phóng bộ nhớ động
+    // deallocate all the dynamically allocated memory , avoid memory leak
     SDL_DestroyTexture(text);   text = nullptr;
     SDL_DestroyTexture(tilesTexture);   tilesTexture = nullptr;
     SDL_DestroyTexture(bkTexture);   bkTexture = nullptr;

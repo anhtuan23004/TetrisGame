@@ -2,7 +2,7 @@
 #include "soundHandler.h"
 #include "GameCanvas.h"
 
-// 7 khối mẫu 
+// seven block patterns
 int blockPatterns[7][4][4] =
 {
     {
@@ -34,7 +34,7 @@ int blockPatterns[7][4][4] =
         {0,1,1,0}
     },
     {
-        // L- Ngược
+        // L-Mirrored
         {0,0,0,0},
         {0,0,1,0},
         {0,0,1,0},
@@ -48,7 +48,7 @@ int blockPatterns[7][4][4] =
         {0,0,1,0}
     },
     {
-        // Z- Ngược
+        // Z-Mirrored
         {0,0,0,0},
         {0,0,1,0},
         {0,1,1,0},
@@ -60,23 +60,23 @@ int blockPatterns[7][4][4] =
 
 Block::Block()
 {
-    //constructor mặc định
+    //ctor init defaults
     tileType = rowNo = colNo = 0;
 }
 
 Block::~Block()
 {
-    //hàm hủy ảo
+    //dtor
 }
 
-// Tạo 1 khối mới bất kì
+// creates a new and random block
 void Block::createNewBlock(int r, int c)
 {
-    int pattern = rand() % 7;   // Chọn bất kì 1 mẫu khối trong 7 mẫu
-    tileType = rand() % 5 + 2;    // Chọn bất kì 1 loại ô
-    rowNo = r;   colNo = c; // Đưa lên vị trí nhất định
+    int pattern = rand() % 7;   // chose a random pattern of block
+    tileType = rand() % 5 + 2;    // chose a random tile-type
+    rowNo = r;   colNo = c; // position it on given positions
 
-    // Sao chép từ mẫu sang khối mẫu và chuyển tất cả số 1 thành 1 loại ô
+    // copy the pattern to block-pattern, and make all 1's of pattern to tile-type
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
@@ -87,10 +87,10 @@ void Block::createNewBlock(int r, int c)
 }
 void Block::rotateBlock()
 {
-    soundHandler::playMovementEffect(); // chạy nhạc khi di chuyển
-    int copyBlock[4][4];    // Khối giả
+    soundHandler::playMovementEffect(); // play the movement effect
+    int copyBlock[4][4];    // dummy block
 
-    // Gán khối gia
+    // copy blockpattern in dummy block
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
@@ -99,7 +99,7 @@ void Block::rotateBlock()
         }
     }
 
-    // Xoay khối
+    // change blockpattern to rotated block
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
@@ -108,7 +108,7 @@ void Block::rotateBlock()
         }
     }
 
-    // Nếu khối xoay ra khỏi ranh giới, sửa vị trí khối
+    // if block went out of game boundry after rotating, handle it
     if (colNo < 0)
     {
         colNo = 0;
@@ -151,26 +151,26 @@ void Block::rotateBlock()
 void Block::moveBlockDown()
 {
     static unsigned long long int i = 0;
-    if (i++ % 40 == 0)   // Làm cho khối di chuyển chậm hơn
+    if (i++ % 40 == 0)   // to make the movement slower
     {
-        soundHandler::playMovementEffect(); // Âm thanh khi di chuyển
-        rowNo++;                // Khối rơi xuống
+        soundHandler::playMovementEffect(); // play block movement effect
+        rowNo++;                // move the block down
     }
 }
 void Block::moveBlockHoriz(int dir)
 {
-    soundHandler::playMovementEffect(); // Âm thanh khi di chuyển
-    if (dir == 0)  // Khi di chuyển sang trái
+    soundHandler::playMovementEffect(); // movement sound effect
+    if (dir == 0)  // for left movement
     {
         colNo--;
     }
-    else if (dir == 1)     // Khi di chuyển sang phải
+    else if (dir == 1)     // for right movement
     {
         colNo++;
     }
 }
 
-// Định nghĩa hàm
+// defination for getters and setters
 int Block::getRowNo()
 {
     return rowNo;

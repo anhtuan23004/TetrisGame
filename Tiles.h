@@ -24,5 +24,4 @@ protected:
 
 private:
 };
-
 #endif // TILES_H

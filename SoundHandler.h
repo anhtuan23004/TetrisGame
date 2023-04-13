@@ -29,5 +29,4 @@ protected:
 
 private:
 };
-
 #endif // SOUNDHANDLER_H

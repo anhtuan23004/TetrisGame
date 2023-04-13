@@ -1,14 +1,7 @@
-﻿  Game.cpp
-C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(177,12): error C2601: 'Game::updateScreen': local function definitions are illegal
-C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(130): message : this line contains a '{' which has not yet been matched
-C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(221,12): error C2601: 'Game::renderChanges': local function definitions are illegal
-C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(130): message : this line contains a '{' which has not yet been matched
-C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(227,12): error C2601: 'Game::gameLoop': local function definitions are illegal
-C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(130): message : this line contains a '{' which has not yet been matched
-C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(246,12): error C2601: 'Game::renderScore': local function definitions are illegal
-C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(130): message : this line contains a '{' which has not yet been matched
-C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(263,12): error C2601: 'Game::gameOver': local function definitions are illegal
-C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(130): message : this line contains a '{' which has not yet been matched
-C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(300,12): error C2601: 'Game::waitForKBHit': local function definitions are illegal
-C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(130): message : this line contains a '{' which has not yet been matched
-C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(130): fatal  error C1075: '{': no matching token found
+﻿  Block.cpp
+  Game.cpp
+  GameCanvas.cpp
+  ImageHandler.cpp
+  main.cpp
+  Generating Code...
+  Teris.vcxproj -> C:\Users\ASUS\source\repos\Teris\x64\Debug\Teris.exe

@@ -10,14 +10,14 @@ public:
     Block();
     virtual ~Block();
 
-    int blockPattern[4][4]; // Lưu trữ khối mẫu
+    int blockPattern[4][4]; // stores pattern of our block
 
-    void createNewBlock(int r, int c);       // Tạo ra 1 khối mới bất kì
-    void rotateBlock();     // Xoay khối
-    void moveBlockDown();   // Di chuyển khối xuống
-    void moveBlockHoriz(int dir);   // Di chuyển khối ngang theo hướng cho trước
+    void createNewBlock(int r, int c);       // create a new and random block
+    void rotateBlock();     // rotate the block
+    void moveBlockDown();   // move the block down
+    void moveBlockHoriz(int dir);   // move block horizontally in accordance with the direction provided
 
-    // get và set
+    // getters and setters
     int getRowNo();
     int getColNo();
     void setRowNo(int);
@@ -25,7 +25,7 @@ public:
     int getTileType();
     void setTileType(int);
 
-    // gán toán tử quá tải
+    // assignment = operator overloaded
     void operator = (const Block& src)
     {
         tileType = src.tileType;
@@ -43,8 +43,8 @@ public:
 protected:
 
 private:
-    int rowNo, colNo;        // Lưu số hàng ngang và dọc của khối
-    int tileType;   // và loại ô của nó
+    int rowNo, colNo;        // store row and column number of block
+    int tileType;   // and its tiletype
 };
 
 

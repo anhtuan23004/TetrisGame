@@ -2,7 +2,7 @@
 
 int main(int argc, char** argv)
 {
-    Game game;
-    game.run();
+    Game tetris;
+    tetris.run();
     return 0;
 }

@@ -141,7 +141,6 @@
   <ItemGroup>
     <ClInclude Include="Block.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameBackground.h" />
     <ClInclude Include="GameCanvas.h" />
     <ClInclude Include="ImageHandler.h" />
     <ClInclude Include="SoundHandler.h" />
