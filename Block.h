@@ -10,6 +10,7 @@ public:
     Block();
     virtual ~Block();
 
+<<<<<<< HEAD
     int blockPattern[4][4];
 
     void createNewBlock(int r, int c);
@@ -18,6 +19,16 @@ public:
     void moveBlockHoriz(int dir);
 
 
+=======
+    int blockPattern[4][4]; 
+
+    void createNewBlock(int r, int c);       
+    void rotateBlock();     
+    void moveBlockDown();   
+    void moveBlockHoriz(int dir);   
+
+    
+>>>>>>> afeb2a6 ('init')
     int getRowNo();
     int getColNo();
     void setRowNo(int);
@@ -28,8 +39,13 @@ public:
 protected:
 
 private:
+<<<<<<< HEAD
     int rowNo, colNo;
     int tileType;
+=======
+    int rowNo, colNo;        
+    int tileType;   
+>>>>>>> afeb2a6 ('init')
 };
 
 

@@ -30,6 +30,7 @@ public:
 
     Game();
     virtual ~Game();
+<<<<<<< HEAD
     void run();
     
     static SDL_Renderer* gameRenderer;
@@ -39,10 +40,20 @@ public:
     static const int FRAME_RATE = 1000 / 60;
     int fps = 0;
     
+=======
+    void run();  
+
+    static SDL_Renderer* gameRenderer; 
+    static TTF_Font* font;  
+    static SDL_Texture* loadText(string, SDL_Color);      
+    static void fatalError(string, bool);    
+
+>>>>>>> afeb2a6 ('init')
 protected:
 
 private:
 
+<<<<<<< HEAD
     bool initSystem();
     void cleanSystem();
     bool loadFiles();
@@ -58,6 +69,22 @@ private:
     SDL_Surface* gameSurface;
     SDL_Event gameEvents;
     GameState gameState;
+=======
+    bool initSystem();      
+    void cleanSystem();     
+    bool loadFiles();       
+    void updateScreen();    
+    void renderChanges();   
+    void gameLoop();        
+    void handleGameEvents();        
+    void renderScore();     
+    void gameOver();        
+
+    SDL_Window* gameWindow; 
+    SDL_Surface* gameSurface;       
+    SDL_Event gameEvents;   
+    GameState gameState;    
+>>>>>>> afeb2a6 ('init')
     unsigned long long score;
     unsigned long long Highscore;
 };

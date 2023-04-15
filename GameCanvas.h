@@ -17,6 +17,7 @@ public:
     GameCanvas();
     virtual ~GameCanvas();
 
+<<<<<<< HEAD
     void showMatrix();
     bool checkForStopCondition(int block[4][4], int r, int c);
     bool destroyRows();
@@ -25,6 +26,16 @@ public:
     bool isLeftMovePossible(int block[4][4], int r, int c);
     bool isRightMovePossible(int block[4][4], int r, int c);
     bool unifyColor();
+=======
+    void showMatrix();      
+    bool checkForStopCondition(int block[4][4], int r, int c);   
+    bool destroyRows();                     
+    void copyBlockToCanvas(int block[4][4], int r, int c);    
+    void clearBlockFromCanvas(int block[4][4], int r, int c); 
+    bool isLeftMovePossible(int block[4][4], int r, int c);   
+    bool isRightMovePossible(int block[4][4], int r, int c);  
+    bool unifyColor();      
+>>>>>>> afeb2a6 ('init')
 
 protected:
 
