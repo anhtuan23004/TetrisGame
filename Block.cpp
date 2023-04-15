@@ -2,7 +2,6 @@
 #include "soundHandler.h"
 #include "GameCanvas.h"
 
-// seven block patterns
 int blockPatterns[7][4][4] =
 {
     {
@@ -60,23 +59,17 @@ int blockPatterns[7][4][4] =
 
 Block::Block()
 {
-    //ctor init defaults
     tileType = rowNo = colNo = 0;
 }
 
-Block::~Block()
-{
-    //dtor
-}
+Block::~Block() {}
 
-// creates a new and random block
 void Block::createNewBlock(int r, int c)
 {
-    int pattern = rand() % 7;   // chose a random pattern of block
-    tileType = rand() % 5 + 2;    // chose a random tile-type
-    rowNo = r;   colNo = c; // position it on given positions
+    int pattern = rand() % 7;
+    tileType = rand() % 5 + 2;
+    rowNo = r;   colNo = c;
 
-    // copy the pattern to block-pattern, and make all 1's of pattern to tile-type
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
@@ -87,10 +80,9 @@ void Block::createNewBlock(int r, int c)
 }
 void Block::rotateBlock()
 {
-    soundHandler::playMovementEffect(); // play the movement effect
-    int copyBlock[4][4];    // dummy block
+    soundHandler::playMovementEffect();
+    int copyBlock[4][4];
 
-    // copy blockpattern in dummy block
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
@@ -99,7 +91,6 @@ void Block::rotateBlock()
         }
     }
 
-    // change blockpattern to rotated block
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
@@ -108,7 +99,6 @@ void Block::rotateBlock()
         }
     }
 
-    // if block went out of game boundry after rotating, handle it
     if (colNo < 0)
     {
         colNo = 0;
@@ -151,26 +141,25 @@ void Block::rotateBlock()
 void Block::moveBlockDown()
 {
     static unsigned long long int i = 0;
-    if (i++ % 40 == 0)   // to make the movement slower
+    if (i++ % 40 == 0)
     {
-        soundHandler::playMovementEffect(); // play block movement effect
-        rowNo++;                // move the block down
+        soundHandler::playMovementEffect();
+        rowNo++;
     }
 }
 void Block::moveBlockHoriz(int dir)
 {
-    soundHandler::playMovementEffect(); // movement sound effect
-    if (dir == 0)  // for left movement
+    soundHandler::playMovementEffect();
+    if (dir == 0)
     {
         colNo--;
     }
-    else if (dir == 1)     // for right movement
+    else if (dir == 1)
     {
         colNo++;
     }
 }
 
-// defination for getters and setters
 int Block::getRowNo()
 {
     return rowNo;

@@ -7,7 +7,9 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
 #include <sstream>
+#include <time.h>
 #include <stdlib.h>
 #include <time.h>
 #include <SDL_video.h>
@@ -19,7 +21,6 @@
 
 using namespace std;
 
-// enum const for Game States
 enum GameState { PLAY, EXIT };
 
 
@@ -29,36 +30,36 @@ public:
 
     Game();
     virtual ~Game();
-    void run();  // run program
-
-    static SDL_Renderer* gameRenderer; // for all rendering on screen
-    static TTF_Font* font;  //font of text
-    static SDL_Texture* loadText(string, SDL_Color);      // loading Text as Texture
-    static void fatalError(string, bool);    // handles all type of Program Errors
-
-
-
-
+    void run();
+    
+    static SDL_Renderer* gameRenderer;
+    static TTF_Font* font;
+    static SDL_Texture* loadText(string, SDL_Color);
+    static void fatalError(string, bool);
+    static const int FRAME_RATE = 1000 / 60;
+    int fps = 0;
+    
 protected:
 
 private:
 
-    bool initSystem();      // setup the system
-    void cleanSystem();     // clean system and memory
-    bool loadFiles();       // load program stuff
-    void updateScreen();    // update changes on screen
-    void renderChanges();   // render changes on screen
-    void gameLoop();        // main Game-Loop
-    void handleGameEvents();        // handles all events of program stuffs
-    void renderScore();     // render updated score on screen
-    void gameOver();        // handles program when game ends
-    void waitForKBHit();    // waits program until KB-Hit
+    bool initSystem();
+    void cleanSystem();
+    bool loadFiles();
+    void updateScreen();
+    void renderChanges();
+    void gameLoop();
+    void handleGameEvents();
+    void renderScore();
+    void gameOver();
+    void waitForKB();
 
-    SDL_Window* gameWindow; // game window
-    SDL_Surface* gameSurface;       // surface of game
-    SDL_Event gameEvents;   // event variable
-    GameState gameState;    // store current state of game
-    unsigned long long score; // stores score
+    SDL_Window* gameWindow;
+    SDL_Surface* gameSurface;
+    SDL_Event gameEvents;
+    GameState gameState;
+    unsigned long long score;
+    unsigned long long Highscore;
 };
 
 #endif // GAME_H

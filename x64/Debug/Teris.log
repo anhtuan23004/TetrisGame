@@ -1,7 +1,10 @@
 ﻿  Block.cpp
   Game.cpp
+C:\Users\ASUS\source\repos\Teris\Teris\Game.cpp(22,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   GameCanvas.cpp
   ImageHandler.cpp
+  SoundHandler.cpp
+  Tiles.cpp
   main.cpp
   Generating Code...
   Teris.vcxproj -> C:\Users\ASUS\source\repos\Teris\x64\Debug\Teris.exe
