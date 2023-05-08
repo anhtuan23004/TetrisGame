@@ -12,15 +12,17 @@ hoặc trên link youtube đới với cài SDL2 trên VSC và sử dựng Makef
 - Mục tiêu của trò chơi là di chuyển các khối gạch đang rơi từ từ xuống sao cho khối hình lấp đầy 1 hàng ngang để ghi điểm và hàng ngang ấy sẽ biến mất.
 ## Cách chơi và tính điểm
 * Phím : 
-- Phím cách : xoay khối.
+- Phím cách: rơi nhanh.
+- Phím mũi tên lên : xoay khối.
 - Phím mũi tên trái: di chuyển sang trái.
 - Phím mũi tên phải: di chuyển sang phải.
-- Phím mũi tên xuống: tăng tốc độ rơi
+- Phím mũi tên xuống: tăng tốc độ rơi.
 * Điểm
 - Cách tính điểm, điểm sẽ được tính khi khối rơi xuống thì +5, ăn được 1 hàng +20.
 ## Các tính năng của game :
 - Có các hiệu ứng âm thanh khi di chuyển, music cho trò chơi
-- Điểm cao (đang update thêm)
+- Điểm cao
+- Có replay
 ## Code tham khảo chủ yếu ở lazyfoo : https://lazyfoo.net/tutorials/SDL/index.php
 
 ## Đây là tựa game phổ biến ,nếu các bạn có góp ý thì có thể mình qua mail : tuanmaianh2004@gmail.com
