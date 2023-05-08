@@ -9,6 +9,8 @@
 #define TILE_BLUE 4
 #define TILE_ORANGE 5
 #define TILE_VOILET 6
+#define TOTAL_TILES 7
+#define TILE_DIM 20
 
 class Tiles
 {
@@ -16,10 +18,11 @@ public:
     Tiles();
     virtual ~Tiles();
 
-    static SDL_Rect tilesSrcRects[7];
+    static SDL_Rect tilesSrcRects[TOTAL_TILES];
 
 protected:
 
 private:
 };
+
 #endif // TILES_H

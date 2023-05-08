@@ -79,7 +79,7 @@ void Game::run()
 
     gameState = PLAY;
 
-    waitForKB();
+    waitForStart();
 
     while (gameState == PLAY)
     {
@@ -144,14 +144,24 @@ void Game::handleGameEvents()
             }
             else if (gameEvents.key.keysym.sym == SDLK_DOWN)
             {
-                // if u want block to fall down in steps
-
                 // clear block from canvas
                 canvas.clearBlockFromCanvas(currentBlock.blockPattern, currentBlock.getRowNo(), currentBlock.getColNo());
                 // if there is no collision happening
                 if (!canvas.checkForStopCondition(currentBlock.blockPattern, currentBlock.getRowNo(), currentBlock.getColNo()))
                 {
                     soundHandler::playMovementEffect();
+                    int newRow = currentBlock.getRowNo();
+                    newRow++;
+                    currentBlock.setRowNo(newRow);
+                }
+            }
+            else if (gameEvents.key.keysym.sym == SDLK_SPACE)
+            {
+                canvas.clearBlockFromCanvas(currentBlock.blockPattern, currentBlock.getRowNo(), currentBlock.getColNo());
+
+                while (!canvas.checkForStopCondition(currentBlock.blockPattern, currentBlock.getRowNo(), currentBlock.getColNo()))
+                {
+
                     int newRow = currentBlock.getRowNo();
                     newRow++;
                     currentBlock.setRowNo(newRow);
@@ -215,7 +225,7 @@ void Game::updateScreen()
         }
         currentBlock = nextBlock; // make the next block as current block
         currentBlock.setRowNo(0);  currentBlock.setColNo(4);    // reset position of current block
-        nextBlock.createNewBlock(23, 18);    // create a new next block
+        nextBlock.createNewBlock(rNewBlock, cNewBlock);    // create a new next block
     }
 
     // copy our next block pattern to canvas
@@ -244,8 +254,8 @@ void Game::gameLoop()
     int frame_time, frames = 0;
 
     // create two blocks of game
-    currentBlock.createNewBlock(0, 4);
-    nextBlock.createNewBlock(23, 18);
+    currentBlock.createNewBlock(NewBlockRow, NewBlockCol);
+    nextBlock.createNewBlock(rNewBlock, cNewBlock);
     while (gameState == PLAY)
     {
         before = SDL_GetTicks();
@@ -361,7 +371,7 @@ void Game::gameOver()
     }
 }
 
-void Game::waitForKB()
+void Game::waitForStart()
 {
     bool kb = false;
     while (!kb)

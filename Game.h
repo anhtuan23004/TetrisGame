@@ -4,6 +4,10 @@
 #define SCREEN_HEIGHT 600
 #define SCREEN_WIDTH 480
 #define SCALE 20
+#define rNewBlock 23
+#define cNewBlock 18
+#define NewBlockRow 0
+#define NewBlockCol 4
 
 #include <iostream>
 #include <string>
@@ -52,7 +56,7 @@ private:
     void handleGameEvents();
     void renderScore();
     void gameOver();
-    void waitForKB();
+    void waitForStart();
 
     SDL_Surface* icon;
     SDL_Window* gameWindow;
